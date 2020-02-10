@@ -1,6 +1,5 @@
 # Commons
 
-Natural resources \(utilities\) used accross OnePhrase modules.
+Natural resources (utilities) used accross OnePhrase modules.
 
-[Get Started](guide.md)
-
+[Get Started](/commons/guide/)
