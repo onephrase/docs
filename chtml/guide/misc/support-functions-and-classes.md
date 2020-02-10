@@ -1,7 +1,8 @@
 # The Composition API
+
 Chtml offers certain methods for working with modules and bundles. We will demonstrate these methods against the simple template below.
 
-```html
+```markup
 <template is=”chtml-bundle”>
 
   <div chtml-role=”user” chtml-ns=”html/badge/user“>
@@ -23,10 +24,11 @@ Chtml offers certain methods for working with modules and bundles. We will demon
 </template>
 ```
 
-## The Chtml.import() Static Method
+## The Chtml.import\(\) Static Method
+
 This method simply retrieves a module by namespace from across loaded bundles.
 
-```js
+```javascript
 var articleEl = Chtml.import(‘html/content/article’);
 ```
 
@@ -34,44 +36,47 @@ The result is the HTML element when found, or undefined, when not found. At this
 
 Below, importing the `html/content/article/readonly` module will apply inheritance-based composition from its `html/content/article` super namespace. And the element returned remains the `<chtml-import>` element.
 
-```js
+```javascript
 var readonlyArticleEl = Chtml.import(‘html/content/article/readonly’);
 ```
 
-## The Chtml.from() Static Method
-This method also works like the Chtml.import() method, but this time, used to retrieve elements from the within the document body, not bundles. Below, we retrieve a namespaced element from within the document body.
+## The Chtml.from\(\) Static Method
 
-```html
+This method also works like the Chtml.import\(\) method, but this time, used to retrieve elements from the within the document body, not bundles. Below, we retrieve a namespaced element from within the document body.
+
+```markup
 <body>
   <chtml-import ondemand chtml-ns=”html/content/article/editable“></chtml-import>
 </body>
 ```
 
-```js
+```javascript
 var editableArticleEl = Chtml.from(‘html/content/article/editable’);
 ```
 
-The result is an HTML element that’s fully resolved to the html/content/article module. At this point, the temporary <chtml-import> element will be automatically replaced by the imported article module.
+The result is an HTML element that’s fully resolved to the html/content/article module. At this point, the temporary  element will be automatically replaced by the imported article module.
 
-## The Chtml.ready() Static Method
+## The Chtml.ready\(\) Static Method
+
 This method is used to keep code execution in sync with the document’s “ready” state. It accepts a callback to be run when the DOM announces readiness – an event that indicates that the document tree has been initialized and safe to access.
 
-```js
+```javascript
 Chtml.ready(() => {
-	// Put code here
+    // Put code here
 });
 ```
 
 This method also extends to wait for CHTML bundles to load. This is useful when running code that relies on external CHTML bundles. As it is, bundles have to be loaded in order to access their modules. In fact, a warning is issued on attempting to import modules while bundles are still loading.
 
-```js
+```javascript
 Chtml.ready(() => {
-	var remoteModule = Chtml.import(‘html/content/article/readonly’);
+    var remoteModule = Chtml.import(‘html/content/article/readonly’);
 });
 ```
 
 To prevent waiting for bundles, pass false as the second argument to this method.
 
-```js
+```javascript
 Chtml.ready(callback, /*waitForBundles*/false);
 ```
+

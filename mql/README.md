@@ -1,5 +1,6 @@
-# MQL - Model Query Language
+# MQL
 
-JavaScript-based (My)SQL library.
+JavaScript-based \(My\)SQL library.
 
-[Get Started](/mql/guide/)
+[Get Started](guide.md)
+
