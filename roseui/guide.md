@@ -4,7 +4,7 @@
 
 ### Embed as script
 
-```html
+```markup
 <script src="https://unpkg.com/@onephrase/roseui"></script>
 
 <script>
@@ -15,20 +15,22 @@ const RoseUI = window.OnePhrase.RoseUI;
 
 ### Install via npm
 
-```shell
+```text
 $ npm i -g npm
 $ npm i --save @onephrase/roseui
 ```
 
 #### Import
+
 RoseUI is written in and distributed as standard JavaScript modules, and is thus imported only with the `import` keyword.
 
 RoseUI works both in browser and server environments.
 
-```js
+```javascript
 // Node-style import
 import RoseUI from '@onephrase/roseui';
 
 // Standard JavaScript import. (Actual path depends on where you installed RoseUI to.)
 import RoseUI from './node_modules/@onephrase/roseui/src/index.js';
 ```
+

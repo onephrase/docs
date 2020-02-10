@@ -2,4 +2,5 @@
 
 > Client-side App Development Framework.
 
-[Get Started](/roseui/guide/)
+[Get Started](guide.md)
+

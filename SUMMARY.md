@@ -1,6 +1,8 @@
 # Table of contents
 
 * [DOCS - OnePhrase.Dev](README.md)
+* [Rose UI](roseui/README.md)
+  * [Getting Started](roseui/guide.md)
 * [CHTML](chtml/README.md)
   * [Getting Started](chtml/guide/README.md)
     * [Strucutural Concepts](chtml/guide/strucutural-concepts/README.md)
@@ -16,14 +18,12 @@
     * [Support Functions and Classes](chtml/guide/misc/README.md)
       * [The Bundler Utility](chtml/guide/misc/the-bundler-utility.md)
       * [The Composition API](chtml/guide/misc/support-functions-and-classes.md)
-* [JSEN](jsen/README.md)
-  * [Getting Started](jsen/guide/README.md)
 * [Observable](observable/README.md)
   * [Getting Started](observable/guide/README.md)
-* [Rose UI](roseui/README.md)
-  * [Getting Started](roseui/guide/README.md)
-* [Commons](commons/README.md)
-  * [Getting Started](commons/guide/README.md)
 * [MQL](mql/README.md)
   * [Getting Started](mql/guide/README.md)
+* [JSEN](jsen/README.md)
+  * [Getting Started](jsen/guide.md)
+* [Commons](commons/README.md)
+  * [Getting Started](commons/guide.md)
 
