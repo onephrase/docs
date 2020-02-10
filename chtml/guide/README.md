@@ -1,11 +1,11 @@
-# Getting Started
+# Guide
 
 ## Installation
 
 ### Embed as script
 
-```html
-<script src="https://unpkg.com/@onephrase/chtml"></script>
+```markup
+<script src="https://unpkg.com/@onephrase/chtml/dist/main.js"></script>
 
 <script>
 // The above tag loads CHTML into a global "OnePhrase" object.
@@ -15,18 +15,18 @@ const Chtml = window.OnePhrase.Chtml;
 
 ### Install via npm
 
-```shell
+```text
 $ npm i -g npm
 $ npm i --save @onephrase/chtml
 ```
 
 #### Import
+
 CHTML is written in and distributed as standard JavaScript modules, and is thus imported only with the `import` keyword.
 
-To import CHTML for a project that renders on the browser...
-(That is, in the context of the browser's `window` object.)
+To import CHTML for a project that renders on the browser... \(That is, in the context of the browser's `window` object.\)
 
-```js
+```javascript
 // Node-style import
 import Chtml from '@onephrase/chtml';
 
@@ -34,10 +34,9 @@ import Chtml from '@onephrase/chtml';
 import Chtml from './node_modules/@onephrase/chtml/src/index.js';
 ```
 
-To import CHTML for a project that renders only on the server...
-(Requirements for setting up server-side rendering coming soon.)
+To import CHTML for a project that renders only on the server... \(Requirements for setting up server-side rendering coming soon.\)
 
-```js
+```javascript
 // Node-style import
 import Chtml from '@onephrase/chtml/src/server-entry';
 
@@ -46,8 +45,10 @@ import Chtml from './node_modules/@onephrase/chtml/src/server-entry.js';
 ```
 
 ## Next Steps
+
 Learn the concepts and write your first CHTML component.
 
-+ [Strucutural Concepts](/chtml/guide/strucutural-concepts/)
-+ [Behavioural Concepts](/chtml/guide/behavioural-concepts/)
-+ [Compositional Concepts](/chtml/guide/compositional-concepts/)
+* [Strucutural Concepts](strucutural-concepts/)
+* [Behavioural Concepts](behavioural-concepts/)
+* [Compositional Concepts](compositional-concepts/)
+
