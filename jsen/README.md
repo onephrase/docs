@@ -13,4 +13,4 @@ The cycle completes with the `toString()` instance method that returns us the st
 
 The new possibilities with JSEN are endless. For example, this paves the way for accepting logical expressions from configuration files and API definition files.
 
-[Get Started](/jsen/guide/getting-started/)
+[Get Started](/jsen/guide/)

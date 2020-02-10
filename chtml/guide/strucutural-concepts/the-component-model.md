@@ -335,7 +335,7 @@ This gives us the following component model.
 
 ```html
 body
-    &lfloor;&mdash; section/region (2)
+      |--- section/region (2)
 ```
 
 The `<ul>` element has the implicit ARIA role list. The `<li>` element has the implicit ARIA role listitem. Here’s how it looks.
@@ -353,7 +353,7 @@ This gives us the following component model. Also notice that the `<li>` element
 
 ```html
 body
-    &lfloor;&mdash; ul/list (1)
-        [0]
-            &lfloor;&mdash; li/listitem (2)
+      |--- ul/list (1)
+        	[0]
+		      |--- li/listitem (2)
 ```

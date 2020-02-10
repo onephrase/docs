@@ -2,7 +2,7 @@
 Applications can be built with CHTML as View layer. This is even more seamless with the concept of reactivity and bindings.
 
 ## Reactivity
-Reactivity is one beautiful thing about the component object. The Chtml class is built off the Observable class from @onephrase/observable. This brings us all the reactivity we’ll need with components and everything else that’s possible with Observables.
+Reactivity is one beautiful thing about the component object. The Chtml class is built off the Observable class from `@onephrase/observable`. This brings us all the reactivity we’ll need with components and everything else that’s possible with Observables.
 
 Being an Observable instance, we can observe when nodes land for the first time on the component object and when they exit the object – either by an explicit delete operation or via a direct removal from the DOM.
 

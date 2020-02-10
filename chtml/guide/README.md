@@ -48,6 +48,6 @@ import Chtml from './node_modules/@onephrase/chtml/src/server-entry.js';
 ## Next Steps
 Learn the concepts and write your first CHTML component.
 
-*	[Strucutural Concepts](/chtml/guide/strucutural-concepts/)
-*	[Behavioural Concepts](/chtml/guide/behavioural-concepts/)
-*	[Compositional Concepts](/chtml/guide/compositional-concepts/)
++ [Strucutural Concepts](/chtml/guide/strucutural-concepts/)
++ [Behavioural Concepts](/chtml/guide/behavioural-concepts/)
++ [Compositional Concepts](/chtml/guide/compositional-concepts/)

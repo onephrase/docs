@@ -160,6 +160,6 @@ article.author.el.html(‘John Doe’);
 ```
 
 Notes:
-*	Drilldown always returns a Chtml instance for every node, whether or not the node has been defined as a component in HTML. This makes everything more predictable when accessing a component tree. The special el key is used to access the node’s underlying element.
-*	A component’s params object is transferred from component to sub components as they are created. So we don’t have to worry about passing params to deep nodes.
-*	Drilldown wisely employs the Chtml.from() method to resolve a node.
++ Drilldown always returns a Chtml instance for every node, whether or not the node has been defined as a component in HTML. This makes everything more predictable when accessing a component tree. The special el key is used to access the node’s underlying element.
++ A component’s params object is transferred from component to sub components as they are created. So we don’t have to worry about passing params to deep nodes.
++ Drilldown wisely employs the Chtml.from() method to resolve a node.

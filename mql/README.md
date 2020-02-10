@@ -2,4 +2,4 @@
 
 JavaScript-based (My)SQL library.
 
-[Get Started](/mql/guide/getting-started/)
+[Get Started](/mql/guide/)
