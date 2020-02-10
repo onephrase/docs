@@ -1,2 +1,0 @@
-# Strucutural Concepts
-CHTML defines a unified way of exposing the UI as a component tree over the native DOM tree. This saves the time for both humans and applications as the DOM's implementation details now get out of the way.
