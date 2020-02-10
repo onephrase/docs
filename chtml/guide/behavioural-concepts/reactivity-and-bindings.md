@@ -1,264 +1,273 @@
 # Reactivity and Bindings
+
 Applications can be built with CHTML as View layer. This is even more seamless with the concept of reactivity and bindings.
 
 ## Reactivity
-Reactivity is one beautiful thing about the component object. The Chtml class is built off the Observable class from `@onephrase/observable`. This brings us all the reactivity we’ll need with components and everything else that’s possible with Observables.
 
-Being an Observable instance, we can observe when nodes land for the first time on the component object and when they exit the object – either by an explicit delete operation or via a direct removal from the DOM.
+Reactivity is one beautiful thing about the component object. The Chtml class is built off the Observable class from `@onephrase/observable`. This brings us all the reactivity we'll need with components and everything else that's possible with Observables.
 
-```js
+Being an Observable instance, we can observe when nodes land for the first time on the component object and when they exit the object - either by an explicit delete operation or via a direct removal from the DOM.
+
+```javascript
 // Remember that nodes are lazy-loaded.
-// So the author node won’t be loaded on the component until the first time it is accessed.
-// First, let’s construct an observer for this event…
-article.$observe(‘author’, author => {
-	console.log(author.el);
+// So the author node wonï¿½t be loaded on the component until the first time it is accessed.
+// First, letï¿½s construct an observer for this eventï¿½
+article.$observe(ï¿½authorï¿½, author => {
+    console.log(author.el);
 });
 
-// Let’s access the node for the first time.
+// Letï¿½s access the node for the first time.
 // Our observer should be called.
-article.author.el.html(‘John Doe’);
+article.author.el.html(ï¿½John Doeï¿½);
 
-// Let’s explicitly delete the node from the object.
+// Letï¿½s explicitly delete the node from the object.
 // Our observer should be called and its author parameter should be undefined.
 delete article.author;
 // Re-accessing the node should recreate the node from the DOM and call our observer.
-article.author.el.html(‘New Name’);
+article.author.el.html(ï¿½New Nameï¿½);
 
-// Let’s directly remove the node from the DOM.
+// Letï¿½s directly remove the node from the DOM.
 // Our observer should be called and its author parameter should be undefined.
 article.author.el.remove();
 // Re-accessing the node should now return undefined.
-article.author.el.html(‘New Name’); // Reference error
+article.author.el.html(ï¿½New Nameï¿½); // Reference error
 ```
 
 ### Binding
-It is possible to introduce arbitrary properties into the component object. A component’s properties must not all be nodes; application data can be set on a component on any property. But we will be careful with our choice of property name to avoid accidentally unsetting a node.
+
+It is possible to introduce arbitrary properties into the component object. A componentï¿½s properties must not all be nodes; application data can be set on a component on any property. But we will be careful with our choice of property name to avoid accidentally unsetting a node.
 
 So we could actually do the following:
 
-```js
-// Trying to avoid conflicting with a node…
-article.authorNameVal = ‘John Doe’;
+```javascript
+// Trying to avoid conflicting with a nodeï¿½
+article.authorNameVal = ï¿½John Doeï¿½;
 article.author.el.html(article.authorNameVal);
 ```
 
-But we will be safer to use a property name that won’t interfere with node names. The “$” character should be our best choice. (The “$” character will now be reserved from being used as a node name.)
+But we will be safer to use a property name that wonï¿½t interfere with node names. The ï¿½$ï¿½ character should be our best choice. \(The ï¿½$ï¿½ character will now be reserved from being used as a node name.\)
 
-```js
-// Safe from conflicts…
-article.$ = ‘John Doe’;
+```javascript
+// Safe from conflictsï¿½
+article.$ = ï¿½John Doeï¿½;
 article.author.el.html(article.$);
 ```
 
-Suppose we had more than one data value to set on the component. This would normally mean setting multiple arbitrary properties on the component; but that would be polluting the component’s property namespace. A better approach would be to make the “$” property an object.
+Suppose we had more than one data value to set on the component. This would normally mean setting multiple arbitrary properties on the component; but that would be polluting the componentï¿½s property namespace. A better approach would be to make the ï¿½$ï¿½ property an object.
 
-```js
-// Set multiple values out of the component’s property namespace…
+```javascript
+// Set multiple values out of the componentï¿½s property namespaceï¿½
 article.$ = {};
-article.$.author = ‘John Doe’;
-article.$.description = ‘Article description’;
+article.$.author = ï¿½John Doeï¿½;
+article.$.description = ï¿½Article descriptionï¿½;
 article.author.el.html(article.$.author);
 article.description.el.html(article.$.description);
 ```
 
-We can leverage reactivity and make the above operations dynamic. So we observe the “$” data property.
+We can leverage reactivity and make the above operations dynamic. So we observe the ï¿½$ï¿½ data property.
 
-```js
+```javascript
 // Render data dynamically
-article.$observe(‘$’, $ => {
-	article.author.el.html($.author);
-	article.description.el.html($.description);
+article.$observe(ï¿½$ï¿½, $ => {
+    article.author.el.html($.author);
+    article.description.el.html($.description);
 });
 
 // We could as well observe the data values as path
-article.$observe(‘$.author’, author => article.author.el.html(author));
-article.$observe(‘$.description’, description => article.author.el.html(description));
+article.$observe(ï¿½$.authorï¿½, author => article.author.el.html(author));
+article.$observe(ï¿½$.descriptionï¿½, description => article.author.el.html(description));
 
 // Bring the data anytime
-article.$ = {author:’John Doe’, description:’Article description’,};
+article.$ = {author:ï¿½John Doeï¿½, description:ï¿½Article descriptionï¿½,};
 
 // Update the data anytime
-article.$ = {author:’Mark Spencer’, description:’Updated article description’,};
+article.$ = {author:ï¿½Mark Spencerï¿½, description:ï¿½Updated article descriptionï¿½,};
 ```
 
-At this point, we have bound operations to the “$” data property. But we still have more to explore with bindings.
+At this point, we have bound operations to the ï¿½$ï¿½ data property. But we still have more to explore with bindings.
 
-#### The Chtml.bind() Instance Method
-This method is just another way to set the component’s data property. It accepts the data component to bind and sets it to the “$” property automatically.
+#### The Chtml.bind\(\) Instance Method
 
-```js
-article.bind({author:’John Doe’, description:’Article description’,});
+This method is just another way to set the componentï¿½s data property. It accepts the data component to bind and sets it to the ï¿½$ï¿½ property automatically.
+
+```javascript
+article.bind({author:ï¿½John Doeï¿½, description:ï¿½Article descriptionï¿½,});
 ```
 
-To change the default data property from the “$” character to something else, the params.dataqKey is used.
+To change the default data property from the ï¿½$ï¿½ character to something else, the params.dataqKey is used.
 
-```js
+```javascript
 // Set this globally
-Chtml.params.dataKey = “data”;
+Chtml.params.dataKey = ï¿½dataï¿½;
 // To change this per instance
-var article = new Chtml(el, {dataKey:’data’});
+var article = new Chtml(el, {dataKey:ï¿½dataï¿½});
 ```
 
-Calls to `article.bind()` will now set the given data object to the component’s `data` property. So it serves to hide implementation details and constitutes a more standard way to add data to a component.
+Calls to `article.bind()` will now set the given data object to the componentï¿½s `data` property. So it serves to hide implementation details and constitutes a more standard way to add data to a component.
 
 ### Binding Observables
-If you noticed, binding plain data objects required that we replace the entire plain object to update. This is because updating properties of the plain object “$” would not bubble up to notify the article object of a change. But this is easy to fix by making the data object an Observable.
 
-```js
+If you noticed, binding plain data objects required that we replace the entire plain object to update. This is because updating properties of the plain object ï¿½$ï¿½ would not bubble up to notify the article object of a change. But this is easy to fix by making the data object an Observable.
+
+```javascript
 // Bring in the Observable class
-import Observable from ‘@onephrase/observable’;
+import Observable from ï¿½@onephrase/observableï¿½;
 
 // Set the observable base for data.
 // Initial properties for the Observable instance are optional
-article.$ = new Observable({author:’John Doe’});
+article.$ = new Observable({author:ï¿½John Doeï¿½});
 
 // Update properties.
-// Operations bound to ‘$.author’ will be re-executed.
-article.$.author = ‘Mark Spencer’;
+// Operations bound to ï¿½$.authorï¿½ will be re-executed.
+article.$.author = ï¿½Mark Spencerï¿½;
 
 // Set new properties.
-// Operations bound to ‘$.description’ will be executed for the first time.
-article.$.description = ‘Article description’;
+// Operations bound to ï¿½$.descriptionï¿½ will be executed for the first time.
+article.$.description = ï¿½Article descriptionï¿½;
 
 // Nest Observables as needed to make deep properties reactive.
-article.$.author = new Observable({fname:‘John’, lname:’Doe’});
-// Update… and anything bound to “$”, “$.author”, or “$.author.fname” will be called.
-article.$.author.fname = ‘Mark’;
+article.$.author = new Observable({fname:ï¿½Johnï¿½, lname:ï¿½Doeï¿½});
+// Updateï¿½ and anything bound to ï¿½$ï¿½, ï¿½$.authorï¿½, or ï¿½$.author.fnameï¿½ will be called.
+article.$.author.fname = ï¿½Markï¿½;
 ```
 
 As a general good practice, application state, and all functionality over state, are not built on CHTML components, but off the component as standalone observable components that plug-in to the CHTML component.
 
 ### Controlling State
+
 In the examples above, we have directly mutated the state of our data object. But a proper way to do this is to encapsulate the mutation logic within the Observable object itself and expose mutations as methods. This way, we will be sure states are mutated in a standard way across the application.
 
 Below, we create a dedicated Author data component, with state control.
 
-```js
+```javascript
 class Author extends Observable {
 
-	/**
-	  * Here we initialize the instance with author names
-	  */
-	constructor() {
-		super();
-		this.authors = [{fname:’John’, lname:’Doe’}, {fname:’Mark’, lname:’Spencer’}];
-	}
+    /**
+      * Here we initialize the instance with author names
+      */
+    constructor() {
+        super();
+        this.authors = [{fname:ï¿½Johnï¿½, lname:ï¿½Doeï¿½}, {fname:ï¿½Markï¿½, lname:ï¿½Spencerï¿½}];
+    }
 
-	/**
-	  * This method publishes a new author name on each call
-	  */
-	next() {
-		var nextAuthor = this.authors.shift();
-		if (nextAuthor) {
-			// The set method must be used to set state
-			this.set(‘fname’, nextAuthor.fname);
-			this.set(‘lname’, nextAuthor.lname);
-			// Or in one set() operation
-			//this.set(nextAuthor);
-		}
-	}
+    /**
+      * This method publishes a new author name on each call
+      */
+    next() {
+        var nextAuthor = this.authors.shift();
+        if (nextAuthor) {
+            // The set method must be used to set state
+            this.set(ï¿½fnameï¿½, nextAuthor.fname);
+            this.set(ï¿½lnameï¿½, nextAuthor.lname);
+            // Or in one set() operation
+            //this.set(nextAuthor);
+        }
+    }
 }
 ```
 
 Next, the binding that updates the DOM. And the binding that updates the data component.
 
-```js
+```javascript
 // We let state-change in the data component trigger update on the DOM.
-// We’ll be showing the full name
-article.$observe([‘$.author.fname’, ‘$.author.lname’], authorNameArray => article.author.el.html(authorNameArray.join(‘ ‘)));
+// Weï¿½ll be showing the full name
+article.$observe([ï¿½$.author.fnameï¿½, ï¿½$.author.lnameï¿½], authorNameArray => article.author.el.html(authorNameArray.join(ï¿½ ï¿½)));
 
 // We let event in the DOM trigger update on the data component.
-// We’ll be seeing a new author on double-clicking the article element
-article.el.on(‘dblclick’, () => article.$.author.$next());
+// Weï¿½ll be seeing a new author on double-clicking the article element
+article.el.on(ï¿½dblclickï¿½, () => article.$.author.$next());
 ```
 
 Now, we plug in the Author data component and make our first click.
 
-```js
+```javascript
 // Add an Author instance to the article component
 article.$.author = new Author();
 ```
 
-At this point, a control-flow pattern has emerged; let’s call this Actions and Reactions! Here, state components are controlled via actions (method calls), DOM components are controlled via reactions (state bindings).
+At this point, a control-flow pattern has emerged; letï¿½s call this Actions and Reactions! Here, state components are controlled via actions \(method calls\), DOM components are controlled via reactions \(state bindings\).
 
-In the Actions / Reactions control-flow pattern, one party (the State component) is designed to be totally agnostic of the other party (DOM components or other observers). So whether or not DOM Components have been bound, the State component remains functional and independent. In other words, it does not need to know who is triggering its methods (actions) and who is listening to states (observers, bindings). Meanwhile, any part of the application can act on, and react to, a State component.
+In the Actions / Reactions control-flow pattern, one party \(the State component\) is designed to be totally agnostic of the other party \(DOM components or other observers\). So whether or not DOM Components have been bound, the State component remains functional and independent. In other words, it does not need to know who is triggering its methods \(actions\) and who is listening to states \(observers, bindings\). Meanwhile, any part of the application can act on, and react to, a State component.
 
 ### Synchronizing Actions with Reactions
-Although State components by design need not know about observers or bindings, they might still sometimes need a feedback from the observers bound to a state. This feedback comes very useful when the State component’s next action needs to synchronize with these observers. Consider the case below.
 
-In the `next()` method of our Author component above, we simply published authors in succession on the fname and lname states. But we could make things more interesting by announcing the beginning and end of this publishing event. We will capture the feedback from observers of this announcement to determine how we go about publishing the new author details. Let’s call this project Author Display.
+Although State components by design need not know about observers or bindings, they might still sometimes need a feedback from the observers bound to a state. This feedback comes very useful when the State componentï¿½s next action needs to synchronize with these observers. Consider the case below.
 
-```js
+In the `next()` method of our Author component above, we simply published authors in succession on the fname and lname states. But we could make things more interesting by announcing the beginning and end of this publishing event. We will capture the feedback from observers of this announcement to determine how we go about publishing the new author details. Letï¿½s call this project Author Display.
+
+```javascript
 /**
   * This method publishes a new author name on each call.
   *
-  * It announces the start and end of each author-change with the “headsup” state.
+  * It announces the start and end of each author-change with the ï¿½headsupï¿½ state.
   */
   next() {
-	  var nextAuthor = this.authors.shift();
-	  if (nextAuthor) {
-		  // Announce the intention to publish new author details
-		  var announcementFeedback = this.set(‘headsup’, ‘publishing’);
-		  // Did any observer ask to prevent this action?
-		  if (announcementFeedback.defaultPrevented) {
-			  return;
-		  }
-		  // Did any observer return a promise?
-		  // That would mean asking this publishing event to hold for a time.
-		  var returnedPromise = announcementFeedback.promises;
-		  if (returnedPromise) {
-			  returnedPromise.then(() => {
-				  this.set(‘fname’, nextAuthor.fname);
-				  this.set(‘lname’, nextAuthor.lname);
-				  this.set(‘headsup’, ‘published’);
-		  	  });
-		  } else {
-			  this.set(‘fname’, nextAuthor.fname);
-			  this.set(‘lname’, nextAuthor.lname);
-			  this.set(‘headsup’, ‘published’);
-		  }
-	}
+      var nextAuthor = this.authors.shift();
+      if (nextAuthor) {
+          // Announce the intention to publish new author details
+          var announcementFeedback = this.set(ï¿½headsupï¿½, ï¿½publishingï¿½);
+          // Did any observer ask to prevent this action?
+          if (announcementFeedback.defaultPrevented) {
+              return;
+          }
+          // Did any observer return a promise?
+          // That would mean asking this publishing event to hold for a time.
+          var returnedPromise = announcementFeedback.promises;
+          if (returnedPromise) {
+              returnedPromise.then(() => {
+                  this.set(ï¿½fnameï¿½, nextAuthor.fname);
+                  this.set(ï¿½lnameï¿½, nextAuthor.lname);
+                  this.set(ï¿½headsupï¿½, ï¿½publishedï¿½);
+                });
+          } else {
+              this.set(ï¿½fnameï¿½, nextAuthor.fname);
+              this.set(ï¿½lnameï¿½, nextAuthor.lname);
+              this.set(ï¿½headsupï¿½, ï¿½publishedï¿½);
+          }
+    }
 }
 ```
 
 As seen, the `next()` method has chosen to honor observer feedbacks. Now we can create bindings that really do return a Promise. In the binding below, we implement a fade-out /fade-in animation as a new author gets published. We do this by returning a Promise on hearing the `publishing` announcement, while playing the fade-out animation. The Promise is resolved at the end of the animation and the `next()` method notices this and publishes the details. Finally, the fade-in animation plays on hearing that the details have been `published`.
 
-```js
-// Bind the fading-out and fading-in to the “headsup” state
-article.$observe(’$.headsup’, state => {
-	if (state === ‘publishing’) {
-		return new Promise((resolve, reject) => {
-			var animation = article.author.el.animate([{opacity:1, opacity:0}], {duration:600});
-			animation.onfinish = resolve;
-		});
-	} else if (state === ‘published’) {
-		article.author.el.animate([{opacity:0, opacity:1}], {duration:600});
-	}
+```javascript
+// Bind the fading-out and fading-in to the ï¿½headsupï¿½ state
+article.$observe(ï¿½$.headsupï¿½, state => {
+    if (state === ï¿½publishingï¿½) {
+        return new Promise((resolve, reject) => {
+            var animation = article.author.el.animate([{opacity:1, opacity:0}], {duration:600});
+            animation.onfinish = resolve;
+        });
+    } else if (state === ï¿½publishedï¿½) {
+        article.author.el.animate([{opacity:0, opacity:1}], {duration:600});
+    }
 });
 
 // As before, the binding that updates the DOM
-article.$observe([‘$.author.fname’, ‘$.author.lname’], authorNameArray => article.author.el.html(authorNameArray.join(‘ ‘)));
+article.$observe([ï¿½$.author.fnameï¿½, ï¿½$.author.lnameï¿½], authorNameArray => article.author.el.html(authorNameArray.join(ï¿½ ï¿½)));
 
 // As before, the binding that updates state
-article.el.on(‘dblclick’, () => article.$.author.$next());
+article.el.on(ï¿½dblclickï¿½, () => article.$.author.$next());
 
 // Plug in the Author, and let double-clicking begin
 article.$.author = new Author();
 ```
 
 ### Optimizing DOM updates
-As seen, CHTML does not intercept operations that update the DOM. But it makes room for implementing DOM updates that are performant. A common technique is to batch DOM-mutation operations and execute them differently from DOM-read operations while keeping everything in sync with the browser’s “animation frame” (the `window.requestAnimationFrame()` function). That way, we would be avoid unnecessary DOM thrashing.
+
+As seen, CHTML does not intercept operations that update the DOM. But it makes room for implementing DOM updates that are performant. A common technique is to batch DOM-mutation operations and execute them differently from DOM-read operations while keeping everything in sync with the browserï¿½s ï¿½animation frameï¿½ \(the `window.requestAnimationFrame()` function\). That way, we would be avoid unnecessary DOM thrashing.
 
 This is an optional optimization strategy and is covered outside the scope of CHTML. But below would be a contrived implementation of the `el.html()` method we have been using.
 
-```js
+```javascript
 html(content) {
-	// We wrap the actual operation
-	// in a callback from an imaginary batch() function.
-		batch(() => {
-			this.innerHtml = content;
-			// Or if this were a custom jQuery method, we would say
-			//this.get(0).innerHtml = content;
-	});
+    // We wrap the actual operation
+    // in a callback from an imaginary batch() function.
+        batch(() => {
+            this.innerHtml = content;
+            // Or if this were a custom jQuery method, we would say
+            //this.get(0).innerHtml = content;
+    });
 }
 ```
+

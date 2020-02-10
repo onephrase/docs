@@ -1,11 +1,11 @@
-# Guide
+# Getting Started
 
 ## Installation
 
 ### Embed as script
 
-```markup
-<script src="https://unpkg.com/@onephrase/observable/dist/main.js"></script>
+```html
+<script src="https://unpkg.com/@onephrase/observable"></script>
 
 <script>
 // The above tag loads Observable into a global "OnePhrase" object.
@@ -15,18 +15,17 @@ const Observable = window.OnePhrase.Observable;
 
 ### Install via npm
 
-```text
+```shell
 $ npm i -g npm
 $ npm i --save @onephrase/observable
 ```
 
 #### Import
-
 Observable is written in and distributed as standard JavaScript modules, and is thus imported only with the `import` keyword.
 
 Observable works both in browser and server environments.
 
-```javascript
+```js
 // Node-style import
 import Observable from '@onephrase/observable';
 
@@ -36,7 +35,7 @@ import Observable from './node_modules/@onephrase/observable/src/index.js';
 
 ### Basic Usage
 
-```javascript
+```js
 // The object to observe...
 var obj = {fruit: 'apple'};
 
@@ -84,16 +83,16 @@ _obj.$set('fruit', 'pear');
 
 ### Observing an Object
 
-```javascript
+```js
 let obj = {};
 let _obj = new Observable(obj);
 // Use in proxy mode
 _obj = _obj.proxy();
 
 _obj.$observe((newValues, oldValues, event) => {
-    console.log(newValues);
-    console.log(oldValues);
-    console.log(event);
+	console.log(newValues);
+	console.log(oldValues);
+	console.log(event);
 });
 
 // Modify the wrapped object and watch your console 
@@ -105,16 +104,16 @@ _obj.fruit = 'bannana';
 
 ### Observing an Array
 
-```javascript
+```js
 let arr = [];
 let _arr = new Observable(arr);
 // Use in proxy mode
 _obj = _obj.proxy();
 
 _arr.$observe((newValues, oldValues, event) => {
-    console.log(newValues);
-    console.log(oldValues);
-    console.log(event);
+	console.log(newValues);
+	console.log(oldValues);
+	console.log(event);
 });
 
 // Modify the wrapped array and watch your console 
@@ -128,23 +127,23 @@ _arr.push('orange');
 
 ### Observing One or More Properties
 
-```javascript
+```js
 // We observe ALL propertes when we do...
 _obj.$observe((newValues, oldValues, event) => {
-    // newValues and oldValues will be key/value
-    // objects of new values and old values respectively
+	// newValues and oldValues will be key/value
+	// objects of new values and old values respectively
 });
 
 // We can observe a list of properties...
 _obj.$observe(['fruit', 'isFavourite'], (newValues, oldValues, event) => {
-    // newValues and oldValues will be
-    // objects of changes on any of the observed properties
+	// newValues and oldValues will be
+	// objects of changes on any of the observed properties
 });
 
 // We can observe a single property...
 _obj.$observe('fruit', (newValue, oldValue, event) => {
-    // newValue and oldValue will directly represent
-    // the property's new value and old value respectively
+	// newValue and oldValue will directly represent
+	// the property's new value and old value respectively
 });
 
 // ---------------------
@@ -157,7 +156,7 @@ _arr.$observe(2, (newValue, oldValue, event) => {});
 
 ### Publishing One or More Changes
 
-```javascript
+```js
 // We publish a single change when we do...
 _obj.fruit = 'Orange';
 
@@ -173,8 +172,8 @@ _obj.$set(['fruit2', 'fruit3'], 'mango');
 
 // We can provide a key/value map...
 _obj.$set({
-    fruit2: 'Mango',
-    fruit3: 'Orange',
+	fruit2: 'Mango',
+	fruit3: 'Orange',
 });
 
 // ---------------------
@@ -191,16 +190,16 @@ _arr.$set([1, 2], 'Orange');
 // For a key/value map...
 // (an object must be used)
 _arr.$set({
-    1: 'Mango',
-    2: 'Orange',
+	1: 'Mango',
+	2: 'Orange',
 });
 ```
 
 ### Observing Deep Changes
+It is possible to observe changes on nested objects or arrays. They just need to be
+an observable instance themselves and their changes will bubble up to the root instance.
 
-It is possible to observe changes on nested objects or arrays. They just need to be an observable instance themselves and their changes will bubble up to the root instance.
-
-```javascript
+```js
 let obj = {};
 let _obj = new Observable(obj);
 // Use in proxy mode
@@ -213,7 +212,7 @@ _childObj = _childObj.proxy();
 
 // So we observe deep changes with the allowBubbling option set to true
 _obj.$observe((newValues, oldValues, event) => {
-    console.log(newValues);
+	console.log(newValues);
 }, {allowBubbling: true});
 
 // Set the _childObj
@@ -226,26 +225,28 @@ _childObj.brand = 'Apple';
 // How can a handlerFunction differentiate between direct change events and bubbling events?
 // Bubbling cases are reported in a handlerFunction's event parameter.
 _obj.$observe((newValues, oldValues, event) => {
-    console.log(event.bubbling);
-    // Should give ["child.brand"]
+	console.log(event.bubbling);
+	// Should give ["child.brand"]
 }, {allowBubbling: true});
 
 // To observe a specific deep property...
 _obj.$observe('child.brand', (newValue, oldValue, event) => {
-    console.log(newValue);
+	console.log(newValue);
 }, {allowBubbling: true});
 
 // To observe a mix of direct and deep properties...
 _obj.$observe(['fruit', 'child.brand'], (newValues, oldValues, event) => {
-    console.log(newValues);
+	console.log(newValues);
 }, {allowBubbling: true});
 ```
 
 ### Unpublishing Properties
+For most use cases, setting a property to undefined or some other falsey value is enough to regard it as unavailable.
+Some other use cases might be very sensitive to object keys
+and a property would need to be completely unset from the object to be really unavailable.
+Deleting a property/key or multiple properties/keys is easy.
 
-For most use cases, setting a property to undefined or some other falsey value is enough to regard it as unavailable. Some other use cases might be very sensitive to object keys and a property would need to be completely unset from the object to be really unavailable. Deleting a property/key or multiple properties/keys is easy.
-
-```javascript
+```js
 // Using the delete keyword
 delete _obj.fruit;
 
@@ -274,8 +275,8 @@ _arr.splice(1, 1);
 // We'll get notified both when the fruit's value changes
 // and when it is completely deleted
 _obj.$observe('fruit', (newValue, oldValue, event) => {
-    // When deleted, newValue will become undefined
-    // But there's a better way of detecting deletions as we'll soon see
+	// When deleted, newValue will become undefined
+	// But there's a better way of detecting deletions as we'll soon see
 });
 
 delete _obj.fruit;
@@ -286,10 +287,11 @@ let keys = Object.keys(_obj);
 ```
 
 ### Observing Property Entries and Exits
+The first time a property is set, it is said to make an entry. When deleted, a property is 
+said to have made an exit. These events aren't the same as regular value changes, so they 
+are reported differently.
 
-The first time a property is set, it is said to make an entry. When deleted, a property is said to have made an exit. These events aren't the same as regular value changes, so they are reported differently.
-
-```javascript
+```js
 // The first time a property is set, our handlerFunction's newValue
 // parameter recieves the value while the oldValue parameter reports undefined.
 // But oldValue being undefined isn't really unique to a property's entry
@@ -297,8 +299,8 @@ The first time a property is set, it is said to make an entry. When deleted, a p
 
 // Entries are best detected in the event parameter.
 _obj.$observe('fruit', (newValue, oldValue, event) => {
-    if (event.entries.includes('fruit')) {
-    }
+	if (event.entries.includes('fruit')) {
+	}
 });
 
 _obj.username = 'foo';
@@ -312,18 +314,21 @@ _obj.username = 'foo';
 
 // Exits are also best detected in the event parameter.
 _obj.$observe('fruit', (newValue, oldValue, event) => {
-    if (event.exits.includes('fruit')) {
-    }
+	if (event.exits.includes('fruit')) {
+	}
 });
 
 delete _obj.username;
 ```
 
 ### Observing Switching Events
+By default, the handlerFunction is triggered on a property's change of value.
+So we get notified on whatever the new value is.
+But we can observe a property's state change between truthy and falsey states as it switches values,
+using the options.pulse parameter.
+(The observe() method accepts an options object as an optional parameter after the functionHandler parameter.)
 
-By default, the handlerFunction is triggered on a property's change of value. So we get notified on whatever the new value is. But we can observe a property's state change between truthy and falsey states as it switches values, using the options.pulse parameter. \(The observe\(\) method accepts an options object as an optional parameter after the functionHandler parameter.\)
-
-```javascript
+```js
 // Observe a property's state.
 
 // With options.pulse === 1, we're notified when
@@ -356,10 +361,9 @@ _obj.isFavourite = false;
 ```
 
 ### Unobserving Properties
-
 It is easy to unobserve an object.
 
-```javascript
+```js
 // Unobserve everything.
 // This frees the instance of all observers
 _obj.$unobserve();
@@ -425,10 +429,13 @@ observer.remove();
 ```
 
 ### Observers Disposition
+Sometimes, a notifying code wants to know what observers have to say to inform its next action.
+And sometimes, certain handlers are mutually exclusive to other handlers, and it becomes necessary
+to stop an event from reaching other handlers.
+An observer's disposition can be sent back in a number of ways.
 
-Sometimes, a notifying code wants to know what observers have to say to inform its next action. And sometimes, certain handlers are mutually exclusive to other handlers, and it becomes necessary to stop an event from reaching other handlers. An observer's disposition can be sent back in a number of ways.
+```js
 
-```javascript
 // ---------------------
 // Using the event.preventDefault() method.
 // ---------------------
@@ -436,8 +443,8 @@ Sometimes, a notifying code wants to know what observers have to say to inform i
 // Similar to the DOM's Event.preventDefault() method,
 // this tells the notifying code not to continue with its default action.
 _obj.$observe('fruit', (newValue, oldValue, event) => {
-    // Do something...
-    event.preventDefault();
+	// Do something...
+	event.preventDefault();
 });
 
 // ---------------------
@@ -447,8 +454,8 @@ _obj.$observe('fruit', (newValue, oldValue, event) => {
 // Similar to the DOM's Event.stopPropagation() method,
 // this stops the event from reaching other handlers.
 _obj.$observe('fruit', (newValue, oldValue, event) => {
-    // Do something...
-    event.stopPropagation();
+	// Do something...
+	event.stopPropagation();
 });
 
 // ---------------------
@@ -458,8 +465,8 @@ _obj.$observe('fruit', (newValue, oldValue, event) => {
 // Similar to returning false on DOM events,
 // this BOTH stops propagation and prevents default
 _obj.$observe('fruit', (newValue, oldValue, event) => {
-    // Do something...
-    return false;
+	// Do something...
+	return false;
 });
 
 // ---------------------
@@ -470,57 +477,42 @@ _obj.$observe('fruit', (newValue, oldValue, event) => {
 // a promise can be returned. The notifying code can make a decision on
 // the promise's resolution or rejection
 _obj.$observe('fruit', (newValue, oldValue, event) => {
-    // even.stopPropagation() may be called as normal
-    // But calling even.preventDefault() will invalidate the returned promise
-    return new Promise((resolve, reject) => {
-        setTimeout(() => {
-            resolve();
-        }, 1000);
-    });
-});
-
-// Using the event.promise() method
-_obj.$observe('fruit', (newValue, oldValue, event) => {
-    event.promise(new Promise((resolve, reject) => {
-        setTimeout(() => {
-            resolve();
-        }, 1000);
-    }));
+	// even.stopPropagation() may be called as normal
+	// But calling even.preventDefault() will invalidate the returned promise
+	return new Promise((resolve, reject) => {
+		setTimeout(() => {
+			resolve();
+		}, 1000);
+	});
 });
 ```
 
 #### Using observersDisposition
 
-When multiple handlers return a promise, the combined promises are returned using Promise.all\(\). When a handler prevents default with a return-false or by calling event.preventDefault\(\) all promises are ignored and false is returned to the notifying code.
+When multiple handlers return a promise,
+the combined promises are returned using Promise.all().
+When a handler prevents default with a return-false
+or by calling event.preventDefault() all promises are ignored
+and false is returned to the notifying code.
 
-```javascript
+```js
 // The notifying code recieves observers' disposition
-var event = _obj.$set('fruit', value);
-if (event.defaultPrevented) {
-    // event.preventDefault() has been called
-    // Or false was returned somewhere
-} else if (event.propagationStopped) {
-    // event.stopPropagation() has been called
-    // Or false was returned somewhere
-} else {
-    var promises = event.promises;
-    if (promises) {
-        promises.then(() => {
-            console.log('All done!');
-        });
-    }
+var observersDisposition = _obj.$set('fruit', value);
+if (observersDisposition === false) {
+} else if (observersDisposition instanceof Promise) {
 }
 ```
 
 ### Proxy-related Utilities
+Observable uses the @onephrase/commons as its utility library. It comes with functions for
+working with proxies.
 
-Observable uses the @onephrase/commons as its utility library. It comes with functions for working with proxies.
-
-Observable's proxies are created with Commons's Js.proxy\(\) method. Proxies created by this function can be later inspected with the other proxy-related utilities.
+Observable's proxies are created with Commons's Js.proxy() method. Proxies created by this function can
+be later inspected with the other proxy-related utilities.
 
 Here are examples:
 
-```javascript
+```js
 import {Js} from '@onephrase/commons';
 
 // To know if an observable instance is a proxy...
@@ -539,4 +531,3 @@ let realObservable = Js.getProxyTarget(_obj);
 // To always use the real observable instance...
 let realObservable = Js.isProxy(_obj) ? Js.getProxyTarget(_obj) : _obj;
 ```
-
