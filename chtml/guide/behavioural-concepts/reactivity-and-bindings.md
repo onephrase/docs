@@ -10,8 +10,8 @@ Being an Observable instance, we can observe when nodes land for the first time 
 
 ```javascript
 // Remember that nodes are lazy-loaded.
-// So the author node won�t be loaded on the component until the first time it is accessed.
-// First, let�s construct an observer for this event
+// So the author node won't be loaded on the component until the first time it is accessed.
+// First, let's construct an observer for this event
 article.$observe('author', author => {
     console.log(author.el);
 });
@@ -20,13 +20,13 @@ article.$observe('author', author => {
 // Our observer should be called.
 article.author.el.html('John Doe');
 
-// Let�s explicitly delete the node from the object.
+// Let's explicitly delete the node from the object.
 // Our observer should be called and its author parameter should be undefined.
 delete article.author;
 // Re-accessing the node should recreate the node from the DOM and call our observer.
 article.author.el.html('New Name');
 
-// Let�s directly remove the node from the DOM.
+// Let's directly remove the node from the DOM.
 // Our observer should be called and its author parameter should be undefined.
 article.author.el.remove();
 // Re-accessing the node should now return undefined.
@@ -48,7 +48,7 @@ article.author.el.html(article.authorNameVal);
 But we will be safer to use a property name that won't interfere with node names. The `$` character should be our best choice. \(The `$` character will now be reserved from being used as a node name.\)
 
 ```javascript
-// Safe from conflicts�
+// Safe from conflicts
 article.$ = 'John Doe';
 article.author.el.html(article.$);
 ```
