@@ -178,7 +178,7 @@ Cascading rules are covered in the section for cascading.
 <body chtml-role=”app”>
 
   <script type=”text/jsen-p”>
-  @bindings {
+  @directives {
       el.append:‘Thanks for visiting!’;
       content.el.append:‘Hello World!’;
   }
@@ -221,7 +221,7 @@ With this understanding of how things work, we can declaratively implement our e
 <div chtml-role=”article” id=”article”>
 
   <script type=”text/jsen-p”>
-  @bindings {
+  @directives {
       author.el.anim:($.author.headsup === ‘publishing’ ? [{opacity:1}, {opacity:0}] : [{opacity:0}, {opacity:1}], {duration:600});
 	  author.el.html:$.author.fname + ‘ ‘ + $.author.lname;
 	  el.on:(‘dblclick’, () => $.author.$next());
