@@ -1,4 +1,4 @@
-# The Composition API
+# Support Functions
 
 Chtml offers certain methods for working with modules and bundles. We will demonstrate these methods against the simple template below.
 
