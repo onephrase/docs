@@ -6,7 +6,7 @@ CHTML is a framework for designing UI components at markup level. It is aptly na
 
 ## Design and Architectural Concepts
 
-CHTML is designed to bring order to your UI and your team!
+CHTML is designed to bring order to your UI and your team! If you've been wishing to break out from the all-JS UI development approach adopted by the many UI frameworks, you'll love CHTML! 
 
 ### Designers
 
