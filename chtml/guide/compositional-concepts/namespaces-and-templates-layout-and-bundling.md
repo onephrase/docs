@@ -1,6 +1,6 @@
 # Namespaces and Templates, Layout and Bundling
 
-In CHTML, components intended for later use are defined together in a `<template>` element. They may, however, be defined individually in separate files on the server with a view to bundling them into a `<template>` element " whatever makes them live comfortably and easy to maintain.
+In CHTML, components intended for later use are defined together in a `<template>` element. They may, however, be defined individually in separate files on the server with a view to bundling them into a `<template>` element - whatever makes them live comfortably and easy to maintain.
 
 ## Namespaces and Templates
 

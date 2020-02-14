@@ -17,7 +17,7 @@
       * [List Composition](chtml/guide/compositional-concepts/list-composition.md)
     * [Support Functions and Classes](chtml/guide/misc/README.md)
       * [The Bundler Utility](chtml/guide/misc/the-bundler-utility.md)
-      * [The Composition API](chtml/guide/misc/support-functions-and-classes.md)
+      * [Support Functions](chtml/guide/misc/support-functions-and-classes.md)
 * [Observable](observable/README.md)
   * [Guide](observable/guide/README.md)
 * [MQL](mql/README.md)

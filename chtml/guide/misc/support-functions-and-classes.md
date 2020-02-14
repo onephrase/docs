@@ -54,7 +54,7 @@ This method also works like the Chtml.import\(\) method, but this time, used to 
 var editableArticleEl = Chtml.from(‘html/content/article/editable’);
 ```
 
-The result is an HTML element that’s fully resolved to the html/content/article module. At this point, the temporary  element will be automatically replaced by the imported article module.
+The result is an HTML element that’s fully resolved to the html/content/article module. At this point, the temporary element will be automatically replaced by the imported article module.
 
 ## The Chtml.ready\(\) Static Method
 
