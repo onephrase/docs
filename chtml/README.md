@@ -3,7 +3,7 @@
 
 CHTML is a framework for designing UI components at markup level. It is aptly named as it entirely shifts UI development from the JavaScript realm to plain HTML. And this is an important change!
 
-Take the [Getting Started](https://docs.onephrase.dev/chtml/guide/) or continue here for an introduction to CHTML.
+Take the [Getting Started](https://docs.onephrase.dev/chtml/guide/) guide or continue here for an introduction to CHTML.
 
 ## Why CHTML
 So we discovered that standard HTML provides an opportunity to implement UI components in plain HTML so that we do not need to go all the way to JavaScript. We built CHTML to unlock this opportunity to be more efficient.
